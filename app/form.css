@@ -1,0 +1,13 @@
+html,
+body {
+  margin-top: 3cm;
+}
+
+header.sticky-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3cm;
+  z-index: 1000;
+}

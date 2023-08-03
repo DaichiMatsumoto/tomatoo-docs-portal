@@ -8,44 +8,8 @@ if (!isset($_SESSION["NAME"])) {
     exit;
 }
 
-$pdo = connectDB();
-
-if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    // 画像を取得
-    $sql = 'SELECT * FROM images ORDER BY created_at DESC';
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    $images = $stmt->fetchAll();
-} else {
-    // 画像を保存
-    if (!empty($_FILES['image']['name'])) {
-        $name = $_FILES['image']['name'];
-        $type = $_FILES['image']['type'];
-        $content = file_get_contents($_FILES['image']['tmp_name']);
-        $size = $_FILES['image']['size'];
-        if(isset($_POST['comments'])){
-            $comments = $_POST['comments'];
-            }
-        $user = htmlspecialchars($_SESSION["NAME"], ENT_QUOTES);
-
-        $sql = 'INSERT INTO images(image_name, image_type, image_content, image_size, created_at, comments, user_name)
-                VALUES (:image_name, :image_type, :image_content, :image_size, now(), :comments, :user_name)';
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':image_name', $name, PDO::PARAM_STR);
-        $stmt->bindValue(':image_type', $type, PDO::PARAM_STR);
-        $stmt->bindValue(':image_content', $content, PDO::PARAM_STR);
-        $stmt->bindValue(':image_size', $size, PDO::PARAM_INT);
-        $stmt->bindValue(':comments', $comments, PDO::PARAM_STR);
-        $stmt->bindValue(':user_name', $user, PDO::PARAM_STR);
-        $stmt->execute();
-    }
-    unset($pdo);
-    header('Location:index.php');
-    exit();
-}
-
-unset($pdo);
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -54,128 +18,48 @@ unset($pdo);
     <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <link rel="icon" type="image/x-icon" href="./img/favicons/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="./img/favicons/apple-touch-icon-180x180.png">
-    <title>Inisienogram</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <title>Tomatoo dosc portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" 
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css"
+        integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
+    <link rel="stylesheet" href="./form.css">
 </head>
 
 <body>
     <header class="sticky-top">
-        <div>
-            <nav class="navbar navbar-light bg-light">
-                <div class="navbar-brand">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid"
+            <div class="navbar-brand">
                     <img src="./img/logo.png" width="200px">
+            </div>
+            <div class="d-flex flex-row-reverse">
+                <div class="p-2"><button type="button" class="btn btn-outline-primary"
+                        onclick="location.href='LoginForm/Logout.php'">Logout</button>
                 </div>
-                <div class="d-flex flex-row-reverse">
-                    <div class="p-2"><button type="button" class="btn btn-outline-primary"
-                            onclick="location.href='LoginForm/Logout.php'">Logout</button>
-                    </div>
-                    <div class="p-2">
-                        <h4>
-                            <?php echo htmlspecialchars($_SESSION["NAME"], ENT_QUOTES); ?>
-                        </h4>
-                    </div>
-                </div>
-            </nav>
-        </div>
+            </div>
+            <div class="p-2">
+                <h4>
+                    <?php echo htmlspecialchars($_SESSION["NAME"], ENT_QUOTES); ?>
+                </h4>
+            </div>
+            </div>
+        <div
+        </nav>
     </header>
-    <div class="container mt-5">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col shadow-sm p-3 mb-3 bg-white rounded">
-                <div class="d-flex flex-row">
-                    <?php for ($i = 0; $i < count($images); $i++): ?>
-                    <div class="p-2">
-                        <a href="#lightbox" data-toggle="modal"
-                            data-slide-to="<?=$i;?>">
-                            <img src="image.php?id=<?=$images[$i]['image_id'];?>"
-                                width="40px" height="40px" class="rounded-circle">
-                        </a>
-                    </div>
-                    <?php endfor;?>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8 border-right">
-                <ul class="list-unstyled">
-                    <?php for ($i = 0; $i < count($images); $i++): ?>
-                    <div class="card mb-3">
-                        <!--ヘッダー-->
-                        <div class="card-header"><?=htmlspecialchars($images[$i]['user_name'], ENT_QUOTES);?>
-                        </div>
-                        <img src="image.php?id=<?=$images[$i]['image_id'];?>"
-                            width="100%"" height=" 100%">
-                        <div class="card-body">
-                            <p class="card-text">
-                                <?=htmlspecialchars($images[$i]['comments'], ENT_QUOTES);?>
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <?=$images[$i]['created_at'];?>
-                            <?php if(htmlspecialchars($images[$i]['user_name'], ENT_QUOTES) == htmlspecialchars($_SESSION["NAME"], ENT_QUOTES)){ ?>
-                            <a href="javascript:void(0);"
-                                onclick="var ok = confirm('削除しますか？'); if (ok) location.href='delete.php?id=<?=$images[$i]['image_id'];?>'">
-                                <i class="far fa-trash-alt"></i> 削除
-                            </a>
-                            <?php }?>
-                        </div>
-                    </div>
-                    <?php endfor;?>
-                </ul>
-            </div>
-            <div class="col-md-4 pt-4 pl-4">
-                <div class="position-fixed">
-                    <form method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label>画像を選択</label>
-                            <input type="file" name="image" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="textarea1">コメント</label>
-                            <textarea id="textarea1" name="comments" class="form-control"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-outline-primary">投稿</button>
-                    </form>
-                </div>
-            </div>
+            <body>
+            <?php
+                $base_url = '/tomatoo/docs-portal/app/docs/BRADI/BRADI_HTML/';
+                $file_path = $_SERVER['DOCUMENT_ROOT'] . '/tomatoo/docs-portal/app/docs/BRADI/BRADI_HTML/BRADI 92fc3990875849c5b53eec3601e12b54.html';
+                $html_content = file_get_contents($file_path);
+                $html_content = str_replace('href="', 'href="' . $base_url, $html_content);
+                echo $html_content;
+            ?>
+            </body>
         </div>
     </div>
-
-    <div class="modal carousel slide" id="lightbox" tabindex="-1" role="dialog" data-ride="carousel">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <ol class="carousel-indicators">
-                        <?php for ($i = 0; $i < count($images); $i++): ?>
-                        <li data-target="#lightbox"
-                            data-slide-to="<?=$i;?>" <?php if ($i == 0) {echo 'class="active"';}?>>
-                        </li>
-                        <?php endfor;?>
-                    </ol>
-                    <div class="carousel-inner">
-                        <?php for ($i = 0; $i < count($images); $i++): ?>
-                        <div
-                            class="carousel-item <?php if ($i == 0) {echo 'active';}?>">
-                            <img src="image.php?id=<?=$images[$i]['image_id'];?>"
-                                class="d-block w-100">
-                        </div>
-                        <?php endfor;?>
-                    </div>
-                    <a class="carousel-control-prev" href="#lightbox" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#lightbox" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
