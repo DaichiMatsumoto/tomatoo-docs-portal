@@ -3,69 +3,45 @@ require 'password.php';   // password_verfy()はphp 5.5.0以降の関数のた�
 // セッション開始
 session_start();
 
-$db['user'] = "deltakid_root";  // ユーザー名
-$db['pass'] = "FJmM5mTA";  // ユーザー名のパスワード
-$param = 'mysql:dbname=deltakid_test2;host=82.163.176.103;charset=utf8';
-
 // エラーメッセージの初期化
 $errorMessage = "";
-
 // ログインボタンが押された場合
 if (isset($_POST["login"])) {
     // 1. ユーザIDの入力チェック
     if (empty($_POST["userid"])) {  // emptyは値が空のとき
         $errorMessage = 'ユーザーIDが未入力です。';
-    } else if (empty($_POST["password"])) {
+    } elseif (empty($_POST["password"])) {
         $errorMessage = 'パスワードが未入力です。';
     }
 
-    if (!empty($_POST["userid"]) && !empty($_POST["password"])) {
-        // 入力したユーザIDを格納
-        $userid = $_POST["userid"];
+    $user_id = $_POST['userid'];
+    $raw_pswd = $_POST['password'];
 
-        // 2. ユーザIDとパスワードが入力されていたら認証する
-        //$dsn = sprintf('mysql: host=%s; dbname=%s; charset=utf8', $db['host'], $db['dbname']);
-        
+    // APIにリクエストを送信
+    $url = 'https://api.crimson.forgot.his.name/brd/ply/user/login';
+    $data = array('user_id' => $user_id, 'raw_pswd' => $raw_pswd);
+    $options = array(
+        'http' => array(
+            'header'  => "Content-type: application/json\r\n",
+            'method'  => 'POST',
+            'content' => json_encode($data),
+            'ignore_errors' => true
+        )
+    );
+    $context  = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+    $response = json_decode($result, true);
 
-        // 3. エラー処理
-        try {
-           // $pdo = new PDO($dsn, $db['user'], $db['pass'], array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
-           $pdo = new PDO($param, $db['user'], $db['pass'], array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
-
-            $stmt = $pdo->prepare('SELECT * FROM userData WHERE name = ?');
-            $stmt->execute(array($userid));
-
-            $password = $_POST["password"];
-
-            if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                if (password_verify($password, $row['password'])) {
-                    session_regenerate_id(true);
-
-                    // 入力したIDのユーザー名を取得
-                    $id = $row['id'];
-                    $sql = "SELECT * FROM userData WHERE id = $id";  //入力したIDからユーザー名を取得
-                    $stmt = $pdo->query($sql);
-                    foreach ($stmt as $row) {
-                        $row['name'];  // ユーザー名
-                    }
-                    $_SESSION["NAME"] = $row['name'];
-                    header("Location: ../index.php");  // メイン画面へ遷移
-                    exit();  // 処理終了
-                } else {
-                    // 認証失敗
-                    $errorMessage = 'ユーザーIDあるいはパスワードに誤りがあります。';
-                }
-            } else {
-                // 4. 認証成功なら、セッションIDを新規に発行する
-                // 該当データなし
-                $errorMessage = 'ユーザーIDあるいはパスワードに誤りがあります。';
-            }
-        } catch (PDOException $e) {
-            $errorMessage = 'データベースエラー';
-            //$errorMessage = $sql;
-            // $e->getMessage() でエラー内容を参照可能（デバッグ時のみ表示）
-            // echo $e->getMessage();
-        }
+    // ログイン成功時
+    if (isset($response['access_token'])) {
+        header("Location: ../index.php");
+        $_SESSION['access_token'] = $response['access_token'];
+        exit();
+    }
+    echo 'OK';
+    // ログイン失敗時
+    elseif (isset($response['error'])) {
+        $errorMessage = 'ログインに失敗しました。正しいパスワードを入力してください。';
     }
 }
 ?>
@@ -78,7 +54,7 @@ if (isset($_POST["login"])) {
     <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <link rel="icon" type="image/x-icon" href="../img/favicons/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="../img/favicons/apple-touch-icon-180x180.png">
-    <title>Inisienogram</title>
+    <title>Tomatoo dosc portal</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
