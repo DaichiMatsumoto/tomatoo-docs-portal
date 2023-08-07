@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (isset($_SESSION["NAME"])) {
+if (isset($_SESSION['access_token'])) {
     $errorMessage = "ログアウトしました。";
 } else {
     $errorMessage = "セッションが切れています。";

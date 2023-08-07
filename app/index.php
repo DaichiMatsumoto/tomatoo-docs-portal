@@ -1,9 +1,20 @@
 <?php
-require_once 'functions.php';
 session_start();
 
+$url = 'https://api.crimson.forgot.his.name/brd/ply/user/info/me';
+$options = array(
+            'http' => array(
+            'header'  => "Authorization: Bearer {$_SESSION['access_token']}\r\n",
+            'method'  => 'GET',
+            'ignore_errors' => true
+        )
+    );
+$context  = stream_context_create($options);
+$result = file_get_contents($url, false, $context);
+$response = json_decode($result, true);
+
 // ログイン状態チェック
-if (!isset($_SESSION["NAME"])) {
+if (isset($response['error']) || !isset($_SESSION['access_token'])) {
     header("Location: LoginForm/Logout.php");
     exit;
 }
@@ -26,7 +37,7 @@ if (!isset($_SESSION["NAME"])) {
     <header id="header" class="header d-flex align-items-center fixed-top">
         <div class="container-fluid d-flex justify-content-between">
             <a href="index.php" class="navbar-brand"><img src="./img/logo.png" width="50px"></a>
-            <h4><?php echo htmlspecialchars($_SESSION["NAME"], ENT_QUOTES); ?></h4>
+            <h4><?php echo htmlspecialchars($response['user_name'], ENT_QUOTES); ?></h4>
             <button type="button" class="btn btn-outline-primary" onclick="location.href='LoginForm/Logout.php'">Logout</button>
         </div>
     </header><!-- End Header -->

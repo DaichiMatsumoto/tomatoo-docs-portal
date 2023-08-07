@@ -1,5 +1,4 @@
 <?php
-require 'password.php';   // password_verfy()はphp 5.5.0以降の関数のため、バージョンが古くて使えない場合に使用
 // セッション開始
 session_start();
 
@@ -21,7 +20,7 @@ if (isset($_POST["login"])) {
     $url = 'https://api.crimson.forgot.his.name/brd/ply/user/login';
     $data = array('user_id' => $user_id, 'raw_pswd' => $raw_pswd);
     $options = array(
-        'http' => array(
+            'http' => array(
             'header'  => "Content-type: application/json\r\n",
             'method'  => 'POST',
             'content' => json_encode($data),
@@ -36,9 +35,8 @@ if (isset($_POST["login"])) {
     if (isset($response['access_token'])) {
         header("Location: ../index.php");
         $_SESSION['access_token'] = $response['access_token'];
-        exit();
+        exit;
     }
-    echo 'OK';
     // ログイン失敗時
     elseif (isset($response['error'])) {
         $errorMessage = 'ログインに失敗しました。正しいパスワードを入力してください。';
