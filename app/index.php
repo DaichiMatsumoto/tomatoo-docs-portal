@@ -36,7 +36,7 @@ if (isset($response['error']) || !isset($_SESSION['access_token'])) {
   <!-- ======= Header ======= -->
     <header id="header" class="header d-flex align-items-center fixed-top">
         <div class="container-fluid d-flex justify-content-between">
-            <a href="index.php" class="navbar-brand"><img src="./img/logo.png" width="50px"></a>
+            <a href="index.php" class="navbar-brand"><img src="./img/logo.png" width="30px"></a>
             <h4><?php echo htmlspecialchars($response['user_name'], ENT_QUOTES); ?></h4>
             <button type="button" class="btn btn-outline-primary" onclick="location.href='LoginForm/Logout.php'">Logout</button>
         </div>
