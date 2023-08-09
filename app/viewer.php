@@ -27,11 +27,12 @@ $file_path = $_SERVER['DOCUMENT_ROOT'] . $base_url;
 $html_content = file_get_contents($file_path);
 
 // Replace relative links considering the source URL
-$html_content = str_replace('href="', 'href="./', $html_content);
-$html_content = str_replace('src="', 'src="./', $html_content);
 $html_content = preg_replace_callback(
-    '/(href|src)="((\.{1,2}\/)+)([^"]*)"/',
+    '/(href|src)="((\.{1,2}\/)*)([^"]*)"/',
     function ($matches) use ($base_url) {
+        if (preg_match('/^(http|https):\/\//', $matches[4])) {
+            return $matches[0];
+        }
         $parsed_url = parse_url($base_url);
         $base_path = dirname($parsed_url['path']);
         $num_periods = substr_count($matches[2], '../');
