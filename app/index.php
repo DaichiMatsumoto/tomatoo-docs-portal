@@ -20,6 +20,13 @@ if (isset($response['error']) || !isset($_SESSION['access_token'])) {
 }
 ?>
 
+<style>
+  iframe {
+    overflow-y: hidden;
+    overflow-x: auto;
+  }
+</style>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -27,7 +34,7 @@ if (isset($response['error']) || !isset($_SESSION['access_token'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="./img/favicons/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="./img/favicons/apple-touch-icon-180x180.png">
-    <title>Tomatoo dosc portal</title>
+    <title>Tomatoo docs portal</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/main.css" rel="stylesheet">
 </head>
@@ -36,7 +43,7 @@ if (isset($response['error']) || !isset($_SESSION['access_token'])) {
   <!-- ======= Header ======= -->
     <header id="header" class="header d-flex align-items-center fixed-top">
         <div class="container-fluid d-flex justify-content-between">
-            <a href="index.php" class="navbar-brand"><img src="./img/logo.png" width="30px"></a>
+            <a href="index.php" class="navbar-brand"><img src="./img/logo_typo.png" width="150px"></a>
             <h4><?php echo htmlspecialchars($response['user_name'], ENT_QUOTES); ?></h4>
             <button type="button" class="btn btn-outline-primary" onclick="location.href='LoginForm/Logout.php'">Logout</button>
         </div>

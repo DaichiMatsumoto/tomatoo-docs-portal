@@ -52,7 +52,7 @@ if (isset($_POST["login"])) {
     <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <link rel="icon" type="image/x-icon" href="../img/favicons/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="../img/favicons/apple-touch-icon-180x180.png">
-    <title>Tomatoo dosc portal</title>
+    <title>Tomatoo docs portal</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
@@ -64,10 +64,10 @@ if (isset($_POST["login"])) {
     <div class="container">
         <div class="row">
             <div class="col">
-                <img class="mb-4" src="../img/logo.png" alt="" width="200px">
+                <img class="mb-4" src="../img/logo_typo.png" alt="" width="400px">
 
                 <form class="form-signin" id="loginForm" name="loginForm" action="" method="POST">
-                    <h3 class="mb-3 font-weight-normal">サインイン</h3>
+                    <h3 class="mb-3 font-weight-normal">docs portalへサインイン</h3>
                     <div>
                         <font color="#ff0000"><?php echo htmlspecialchars($errorMessage, ENT_QUOTES); ?>
                         </font>

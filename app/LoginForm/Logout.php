@@ -22,7 +22,7 @@ $_SESSION = array();
     <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <link rel="icon" type="image/x-icon" href="../img/favicons/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="../img/favicons/apple-touch-icon-180x180.png">
-    <title>Inisienogram</title>
+    <title>Tomatoo docs portal</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
