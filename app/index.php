@@ -36,31 +36,20 @@ if (isset($response['error']) || !isset($_SESSION['access_token'])) {
 </head>
 
 <body>
-  <!-- ======= Header ======= -->
-  <header id="header" class="header d-flex align-items-center fixed-top">
+<!-- ======= Header ======= -->
+<header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid d-flex justify-content-between">
-      <a href="index.php" class="navbar-brand"><img src="./img/logo_typo.png" width="150px"></a>
-      <div class="d-flex align-items-center">
-        <div class="row">
-          <div class="col-3 col-sm-1.5">
-            <img class="img-fluid rounded-circle" width="40" height="40" src="<?php echo htmlspecialchars($response['icon_url'], ENT_QUOTES); ?>" alt="icon" />
-          </div>
-          <div class="col-3 col-sm-1.5">
-            <h4><?php echo htmlspecialchars($response['user_name'], ENT_QUOTES); ?></h4>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6 col-sm-3">
+        <a href="index.php" class="navbar-brand"><img src="./img/logo_typo.png" width="150px"></a>
+        <div class="user-details d-flex align-items-center">
+            <img class="rounded-circle user-icon" src="<?php echo htmlspecialchars($response['icon_url'], ENT_QUOTES); ?>" alt="icon" />
+            <h6 class="mx-3"><?php echo htmlspecialchars($response['user_name'], ENT_QUOTES); ?></h6>
             <button type="button" class="btn btn-outline-light" onclick="location.href='LoginForm/Logout.php'">
-              <img width="20" height="20" src="https://img.icons8.com/officel/16/exit.png" alt="exit" />
+                <img width="20" height="20" src="https://img.icons8.com/officel/16/exit.png" alt="exit" />
             </button>
-          </div>
         </div>
-      </div>
     </div>
-  </header>
-  <!-- End Header -->
-
+</header>
+<!-- End Header -->
   <div class="container-fluid mt-5">
     <div class="row">
       <div class="col">
