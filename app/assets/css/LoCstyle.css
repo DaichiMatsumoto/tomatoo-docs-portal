@@ -1,0 +1,49 @@
+/* styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Prosto+One&display=swap');
+
+.file-explorer {
+  font-family: var(--font-primary);
+  background-color: #c0c0c0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.directory, .file {
+  cursor: pointer;
+  padding-left: 1.5rem;
+}
+
+.directory::before, .file::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: -1.5rem;
+  margin-right: 0.5rem;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.directory::before {
+  background-image: url('https://img.icons8.com/ultraviolet/40/folder-invoices--v1.png');
+}
+
+.file::before {
+  background-image: url('https://img.icons8.com/ultraviolet/40/html-filetype.png');
+}
+
+.collapsed>ul {
+  display: none;
+}
+
+.file:hover {
+  background-color: #e9ecef;
+}
+
+.directory.collapsed>ul {
+  display: none;
+}

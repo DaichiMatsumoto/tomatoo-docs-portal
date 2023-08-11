@@ -1,17 +1,9 @@
 <?php
+require 'functions.php';
+
 session_start();
 
-$url = 'https://api.crimson.forgot.his.name/brd/ply/user/info/me';
-$options = array(
-            'http' => array(
-            'header'  => "Authorization: Bearer {$_SESSION['access_token']}\r\n",
-            'method'  => 'GET',
-            'ignore_errors' => true
-        )
-    );
-$context  = stream_context_create($options);
-$result = file_get_contents($url, false, $context);
-$response = json_decode($result, true);
+$response = call_bradi_api_infoMe();
 
 // ログイン状態チェック
 if (isset($response['error']) || !isset($_SESSION['access_token'])) {
@@ -19,7 +11,7 @@ if (isset($response['error']) || !isset($_SESSION['access_token'])) {
     exit;
 }
 
-$redirect_url = $_GET['url'] ?? 'BRADI/BRADI_HTML/BRADI 92fc3990875849c5b53eec3601e12b54.html';
+$redirect_url = $_GET['url'];
 $encoded_url = urldecode($redirect_url);
 
 $base_url = '/tomatoo/docs-portal/app/docs/' . $encoded_url;
@@ -46,4 +38,3 @@ $html_content = preg_replace_callback(
 );
 
 echo $html_content;
-?>
