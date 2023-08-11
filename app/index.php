@@ -53,7 +53,7 @@ if (isset($response['error']) || !isset($_SESSION['access_token'])) {
       </div>
   </header><!-- End Header -->
   <div class="container-fluid mt-5">
-    <iframe src="LoC.php" width="100%" onload="resizeIframe(this);" frameborder="0" scrolling="no"></iframe>
+    <iframe src="LoC.php" width="100%" onload="resizeIframe(this);" frameborder="0" scrolling="yes"></iframe>
   </div>
   <script src="assets/js/main.js"></script>
 </body>

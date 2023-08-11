@@ -1,3 +1,9 @@
+<script>
+    window.addEventListener('load', function() {
+        window.parent.scrollTo(0, 0);
+    });
+</script>
+
 <?php
 require 'functions.php';
 
@@ -38,3 +44,4 @@ $html_content = preg_replace_callback(
 );
 
 echo $html_content;
+?>

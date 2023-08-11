@@ -42,7 +42,7 @@ if (isset($_POST["login"])) {
     <link rel="icon" type="image/x-icon" href="../img/favicons/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="../img/favicons/apple-touch-icon-180x180.png">
     <title>Tomatoo docs portal</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="form.css">
 </head>
@@ -60,7 +60,7 @@ if (isset($_POST["login"])) {
                         </font>
                     </div>
                     <label for="userid" class="sr-only">ユーザーID</label>
-                    <input type="text" id="userid" class="form-control" name="userid" placeholder="UserName" required autofocus value="<?php if (!empty($_POST["userid"])) {
+                    <input type="text" id="userid" class="form-control" name="userid" placeholder="UserID" required autofocus value="<?php if (!empty($_POST["userid"])) {
                                                                                                                                             echo htmlspecialchars($_POST["userid"], ENT_QUOTES);
                                                                                                                                         } ?>">
                     <label for="password" class="sr-only">パスワード</label>
