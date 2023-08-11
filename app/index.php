@@ -14,8 +14,11 @@ if (isset($response['error']) || !isset($_SESSION['access_token'])) {
 
 <style>
   iframe {
-    overflow-y: hidden;
+    overflow-y: auto;
     overflow-x: auto;
+    margin-top: 70px;
+    box-sizing: border-box;
+    width: 100%;
   }
 </style>
 
@@ -39,7 +42,10 @@ if (isset($response['error']) || !isset($_SESSION['access_token'])) {
       <a href="index.php" class="navbar-brand"><img src="./img/logo_typo.png" width="150px"></a>
       <div class="d-flex align-items-center">
         <div class="row">
-          <div class="col-6 col-sm-3">
+          <div class="col-3 col-sm-1.5">
+            <img class="img-fluid rounded-circle" width="40" height="40" src="<?php echo htmlspecialchars($response['icon_url'], ENT_QUOTES); ?>" alt="icon" />
+          </div>
+          <div class="col-3 col-sm-1.5">
             <h4><?php echo htmlspecialchars($response['user_name'], ENT_QUOTES); ?></h4>
           </div>
         </div>
@@ -51,9 +57,16 @@ if (isset($response['error']) || !isset($_SESSION['access_token'])) {
           </div>
         </div>
       </div>
-  </header><!-- End Header -->
+    </div>
+  </header>
+  <!-- End Header -->
+
   <div class="container-fluid mt-5">
-    <iframe src="LoC.php" width="100%" onload="resizeIframe(this);" frameborder="0" scrolling="yes"></iframe>
+    <div class="row">
+      <div class="col">
+        <iframe src="LoC.php" width="100%" onload="resizeIframe(this);" frameborder="0" scrolling="no"></iframe>
+      </div>
+    </div>
   </div>
   <script src="assets/js/main.js"></script>
 </body>
