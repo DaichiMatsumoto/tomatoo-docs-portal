@@ -1,7 +1,10 @@
 <script>
     function toggleDirectory(event, element) {
-        event.stopPropagation();
+        event.stopPropagation(); // Prevent event from bubbling up to parent elements
+
+        // Toggle the 'collapsed' class for the clicked directory
         element.classList.toggle('collapsed');
+
     }
 </script>
 
@@ -25,7 +28,7 @@ function call_bradi_api_infoMe()
 
 function call_bradi_api_login($user_id, $raw_pswd)
 {
-    // APIにリクエストを送信
+    // API縺ｫ繝ｪ繧ｯ繧ｨ繧ｹ繝医ｒ騾∽ｿ｡
     $url = 'https://api.crimson.forgot.his.name/brd/ply/user/login';
     $data = array('user_id' => $user_id, 'raw_pswd' => $raw_pswd);
     $options = array(

@@ -10,7 +10,7 @@
   width: 100%;
   border: 1px solid #dee2e6;
   border-radius: 5px;
-  padding: 1rem;
+  overflow: auto;  /* Setting overflow to auto */
 }
 
 .directory, .file {
@@ -43,8 +43,4 @@
 
 .file:hover {
   background-color: #e9ecef;
-}
-
-.directory.collapsed>ul {
-  display: none;
 }
