@@ -60,7 +60,7 @@ function displayDirectoryTree($dir, $relativePath = '')
         if (is_dir($path)) {
             echo "<li class='directory collapsed' onclick='toggleDirectory(event, this)'>{$item}</li>";
             displayDirectoryTree($path, $newRelativePath);
-        } elseif (pathinfo($path, PATHINFO_EXTENSION) == 'html') {
+        } elseif (pathinfo($path, PATHINFO_EXTENSION) == 'html' || pathinfo($path, PATHINFO_EXTENSION) == 'php') {
             $encodedPath = urlencode(mb_convert_encoding($newRelativePath, 'UTF-8', 'auto'));
             $decodedPath = str_replace('%2F', '/', $encodedPath);
             echo "<li class='file'><a href='{$decodedPath}'>{$item}</a></li>";
